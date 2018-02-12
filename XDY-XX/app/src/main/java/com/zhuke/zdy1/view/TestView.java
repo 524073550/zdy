@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -60,10 +61,33 @@ public class TestView extends View {
         mPaint.getTextBounds(mTextTitle,0,mTextTitle.length(), mRect);
     }
 
-    @Override
+   /* @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heighSize = MeasureSpec.getSize(heightMeasureSpec);
+        int width;
+        int height;
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        }else {
+            mPaint.setTextSize(mTextSize);
+            mPaint.getTextBounds(mTextTitle,0,mTextTitle.length(), mRect);
+            float width1 = mRect.width();
+            width = (int)(getPaddingLeft() + width1 + getPaddingRight() );
+        }
+
+        if (heightMode == MeasureSpec.EXACTLY){
+            height = heighSize;
+        }else {
+            mPaint.setTextSize(mTextSize);
+            mPaint.getTextBounds(mTextTitle,0,mTextTitle.length(), mRect);
+            int height1 = mRect.height();
+            height = (int)(getPaddingTop() + height1 + getPaddingBottom());
+        }
+        setMeasuredDimension(width,height);
+    }*/
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -71,6 +95,8 @@ public class TestView extends View {
         mPaint.setColor(Color.RED);
         canvas.drawRect(0,0,getMeasuredWidth(),getMeasuredHeight(),mPaint);
         mPaint.setColor(R.color.colorPrimary);
+        Log.e("onDraw",getWidth()+"=" + getHeight());
+        Log.e("onDraw",mRect.width()+"=" + mRect.height());
         canvas.drawText(mTextTitle,getWidth()/2-mRect.width()/2,getHeight()/2-mRect.height()/2,mPaint);
     }
 }

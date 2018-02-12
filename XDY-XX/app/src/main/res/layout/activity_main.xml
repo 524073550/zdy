@@ -7,9 +7,41 @@
 
 
     <com.zhuke.zdy1.view.TestView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:titleText="12345"
         app:titleTextColor="@color/colorPrimary"
         app:titleTextSize="16sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorAccent">
+
+        <com.zhuke.zdy1.view.WaveView
+            android:id="@+id/wv"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom"
+            />
+    </FrameLayout>
+
+    <com.zhuke.zdy1.view.PieView
+        android:id="@+id/pv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        />
+
+    <com.zhuke.zdy1.view.LineView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <com.zhuke.zdy1.view.PassWordEditText
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:layout_width="200dp"
+        android:layout_height="50dp"/>
 </LinearLayout>
