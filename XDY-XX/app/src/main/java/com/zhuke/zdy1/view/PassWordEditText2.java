@@ -58,11 +58,11 @@ public class PassWordEditText2 extends android.support.v7.widget.AppCompatEditTe
      */
     private int mInputLength;
     public PassWordEditText2(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public PassWordEditText2(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public PassWordEditText2(Context context, AttributeSet attrs, int defStyleAttr) {
