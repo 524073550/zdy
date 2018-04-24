@@ -6,9 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.text.method.BaseKeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhuke.zdy1.R;
 
@@ -17,7 +20,7 @@ import com.zhuke.zdy1.R;
  * Created by 15653 on 2018/2/12.
  */
 
-public class PassWordEditText extends android.support.v7.widget.AppCompatEditText {
+public class PassWordEditText extends android.support.v7.widget.AppCompatEditText implements View.OnKeyListener {
     /**
      * 间隔
      */
@@ -25,7 +28,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
     private int mWidth;
     private int mHeigh;//每个边框高度
     private int mLineSize;//每个边框宽度
-    private int maxCount = 6;
+    private int maxCount = 6;//密码长度
     private int textLength;
     //边框属性
     private Paint mStrokePaint = new Paint();
@@ -45,8 +48,12 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
     private int passwordType = 2;
 
     //下划线距离
-    private int lineWidth = 10;
+    private int lineWidth = 30;
+    private String mPassword;
 
+    public PassWordEditText(Context context) {
+        super(context);
+    }
 
     public PassWordEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -60,6 +67,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         passwordPointWidth = typedArray.getInt(R.styleable.PassWordEditText_passwordPointWidth, passwordPointWidth);
         strokeType = typedArray.getInt(R.styleable.PassWordEditText_strokeType, strokeType);
         passwordType = typedArray.getInt(R.styleable.PassWordEditText_passwordType, passwordType);
+        this.setOnKeyListener(this);
         mStrokePaint.setStrokeWidth(strokeWidth);
         mStrokePaint.setAntiAlias(true);
         mStrokePaint.setStyle(Paint.Style.STROKE);
@@ -68,6 +76,10 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         mPasswordPaint.setAntiAlias(true);
         mPasswordPaint.setTextSize(dip2px(context, textPassSize));
         mPasswordPaint.setColor(textPassColor);
+    }
+
+    public PassWordEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
 
@@ -106,7 +118,28 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
                 break;
         }
 
+        switch (passwordType){
+            case 1: //明文
+                drawText(canvas);
+                break;
+            case 2: //实心点
+                drawPoint(canvas);
+                break;
+        }
+    }
 
+    private void drawText(Canvas canvas) {
+        mPasswordPaint.setTextAlign(Paint.Align.CENTER);
+        Paint.FontMetrics fontMetrics = mPasswordPaint.getFontMetrics();
+        float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
+        float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+        float textHeigh = top + bottom;
+        for (int i = 0; i < textLength; i++) {
+            canvas.drawText(mPassword.substring(i,i+1),mLineSize / 2 + (mLineSize + PWD_SPACING) * i,mHeigh / 2-(top + bottom)/2,mPasswordPaint);
+        }
+    }
+
+    private void drawPoint(Canvas canvas) {
         for (int i = 0; i < textLength; i++) {
             int cx = mLineSize / 2 + (mLineSize + PWD_SPACING) * i;
             int cy = mHeigh / 2;
@@ -119,7 +152,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         mPasswordPaint.setColor(Color.DKGRAY);
         for (int i = 0; i < maxCount; i++) {
             //mLineSize
-            canvas.drawLine(i * (mLineSize ) + lineWidth, mHeigh - lineWidth, (mLineSize ) * (i +1) - lineWidth, mHeigh - lineWidth, mPasswordPaint);
+            canvas.drawLine(i * (mLineSize ) + lineWidth, mHeigh - lineWidth, (mLineSize) * (i+1) - lineWidth, mHeigh - lineWidth, mPasswordPaint);
         }
 
        /* canvas.drawLine(getPaddingLeft() + (passwordSize + passwordPadding) * i, getPaddingTop() + passwordSize,
@@ -142,8 +175,72 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         this.textLength = text.toString().length();
+        mPassword = text.toString().trim();
+        if (textLength > maxCount){
+            return;
+        }else if (textLength == maxCount){
+            Toast.makeText(getContext(), mPassword,Toast.LENGTH_SHORT).show();
+            if (mOnInputEndListener != null){
+                mOnInputEndListener.setOnInputEndListener(mPassword);
+            }
+        }
         invalidate();
     }
 
 
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_ENTER){
+            return true;
+        }
+        return false;
+    }
+
+    private OnInputEndListener mOnInputEndListener;
+    public void setOnInputEndListener(OnInputEndListener onInputEndListener){
+        this.mOnInputEndListener = onInputEndListener;
+    }
+    interface OnInputEndListener{
+        void setOnInputEndListener(String password);
+    }
+
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
+    }
+
+    public void setBorderRadius(int borderRadius) {
+        this.borderRadius = borderRadius;
+    }
+
+    public void setStrokeWidth(int strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    public void setStrokeColor(int strokeColor) {
+        this.strokeColor = strokeColor;
+    }
+
+    public void setTextPassSize(int textPassSize) {
+        this.textPassSize = textPassSize;
+    }
+
+    public void setTextPassColor(int textPassColor) {
+        this.textPassColor = textPassColor;
+    }
+
+    public void setPasswordPointWidth(int passwordPointWidth) {
+        this.passwordPointWidth = passwordPointWidth;
+    }
+
+    public void setStrokeType(int strokeType) {
+        this.strokeType = strokeType;
+    }
+
+    public void setPasswordType(int passwordType) {
+        this.passwordType = passwordType;
+    }
+
+    public void setLineWidth(int lineWidth) {
+        this.lineWidth = lineWidth;
+    }
 }
