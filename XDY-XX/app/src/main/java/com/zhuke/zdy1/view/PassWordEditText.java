@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.zhuke.zdy1.R;
@@ -118,7 +119,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         mPasswordPaint.setColor(Color.DKGRAY);
         for (int i = 0; i < maxCount; i++) {
             //mLineSize
-            canvas.drawLine(i * (mLineSize + lineWidth) + lineWidth, mHeigh - lineWidth, (mLineSize + lineWidth) * i + mLineSize - lineWidth, mHeigh - lineWidth, mPasswordPaint);
+            canvas.drawLine(i * (mLineSize ) + lineWidth, mHeigh - lineWidth, (mLineSize ) * (i +1) - lineWidth, mHeigh - lineWidth, mPasswordPaint);
         }
 
        /* canvas.drawLine(getPaddingLeft() + (passwordSize + passwordPadding) * i, getPaddingTop() + passwordSize,

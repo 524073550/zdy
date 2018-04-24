@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 
 /**
@@ -58,14 +59,17 @@ public class PassWordEditText2 extends android.support.v7.widget.AppCompatEditTe
      */
     private int mInputLength;
     public PassWordEditText2(Context context) {
-        super(context);
+        this(context,null);
+        Log.e("PassWordEditText","1");
     }
 
     public PassWordEditText2(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, android.support.v7.appcompat.R.attr.editTextStyle);
+        Log.e("PassWordEditText","2");
     }
 
     public PassWordEditText2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Log.e("PassWordEditText","3");
     }
 }
