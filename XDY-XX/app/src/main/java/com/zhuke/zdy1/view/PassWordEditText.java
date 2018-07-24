@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.text.InputFilter;
 import android.text.method.BaseKeyListener;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -76,6 +77,10 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         mPasswordPaint.setAntiAlias(true);
         mPasswordPaint.setTextSize(dip2px(context, textPassSize));
         mPasswordPaint.setColor(textPassColor);
+        //设置输入的密码长度,限制键盘输入的长度
+        setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxCount)});
+        typedArray.recycle();
+
     }
 
     public PassWordEditText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -99,7 +104,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+//        super.onDraw(canvas);
         mWidth = getWidth();
         mHeigh = getHeight();
         mLineSize = mWidth / maxCount;
@@ -133,9 +138,13 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         Paint.FontMetrics fontMetrics = mPasswordPaint.getFontMetrics();
         float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
         float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
-        float textHeigh = top + bottom;
         for (int i = 0; i < textLength; i++) {
-            canvas.drawText(mPassword.substring(i,i+1),mLineSize / 2 + (mLineSize + PWD_SPACING) * i,mHeigh / 2-(top + bottom)/2,mPasswordPaint);
+            try {
+                canvas.drawText(mPassword.substring(i,i+1),mLineSize / 2 + (mLineSize + PWD_SPACING) * i,mHeigh / 2-(top + bottom)/2,mPasswordPaint);
+            }catch (Exception e){
+                e.printStackTrace();
+                return;
+            }
         }
     }
 
@@ -151,13 +160,8 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
         mPasswordPaint.setStrokeWidth(strokeWidth);
         mPasswordPaint.setColor(Color.DKGRAY);
         for (int i = 0; i < maxCount; i++) {
-            //mLineSize
             canvas.drawLine(i * (mLineSize ) + lineWidth, mHeigh - lineWidth, (mLineSize) * (i+1) - lineWidth, mHeigh - lineWidth, mPasswordPaint);
         }
-
-       /* canvas.drawLine(getPaddingLeft() + (passwordSize + passwordPadding) * i, getPaddingTop() + passwordSize,
-                getPaddingLeft() + (passwordSize + passwordPadding) * i + passwordSize, getPaddingTop() + passwordSize,
-                paint);*/
     }
 
     private void drawRect(Canvas canvas) {
@@ -190,7 +194,7 @@ public class PassWordEditText extends android.support.v7.widget.AppCompatEditTex
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_ENTER){
+        if(keyCode==KeyEvent.KEYCODE_ENTER||keyCode==KeyEvent.ACTION_DOWN ){
             return true;
         }
         return false;

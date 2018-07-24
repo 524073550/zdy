@@ -23,9 +23,9 @@ public class CanvasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 //         final CanvasTest canvasTest = (CanvasTest) findViewById(R.id.canvas);
-         final RoundProgress canvasTest = (RoundProgress) findViewById(R.id.canvas);
+//         final RoundProgress canvasTest = (RoundProgress) findViewById(R.id.canvas);
 
-        final float totalProgress = 90;
+     /*   final float totalProgress = 90;
 //        让当前的进度条动态的加载显示
         new Thread(new Runnable() {
             @Override
@@ -39,7 +39,7 @@ public class CanvasActivity extends AppCompatActivity {
                     canvasTest.postInvalidate();
                 }
             }
-        }).start();
+        }).start();*/
 
     }
 }

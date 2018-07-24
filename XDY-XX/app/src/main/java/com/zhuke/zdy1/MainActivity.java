@@ -22,6 +22,13 @@ public class MainActivity extends AppCompatActivity {
             mData.add(new PieDataBean("hong",(10+i)*2));
         }
         pv.setData(mData);
-        Log.e("pieview",pv.getWidth()+"="+pv.getHeight());
+        Log.e("pieview",replaceSpace(new StringBuffer("i love you")));
     }
+
+
+        public String replaceSpace(StringBuffer str) {
+            String s = str.toString().replaceAll(" ", "%20");
+            return s;
+        }
+
 }

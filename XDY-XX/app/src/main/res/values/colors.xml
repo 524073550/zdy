@@ -4,4 +4,43 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#fff</color>
+    <color name="black">@android:color/black</color>
+    <color name="gray">#E4E4E4</color>
+    <color name="pressed_color">#88E4E4E4</color>
+    <color name="black_opacity_90">#dd000000</color>
+    <color name="light_black">#4A4A4A</color>
+    <color name="dark_black">#BABABA</color>
+    <color name="light_gray">#CFCFCF</color>
+    <color name="green">#60cf8b</color>
+    <color name="brown">#a27e7e</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="red">#FC7662</color>
+    <color name="light_red">#CC0000</color>
+    <color name="red_text">#FF8EA3</color>
+    <color name="hint_color">#afafb3</color>
+    <color name="gray_text">#828282</color>
+    <color name="gray_333">#333333</color>
+    <color name="divider_color">#CFCFCF</color>
+    <color name="divider_color_wide">#F5F5F5</color>
+
+    <!--标题颜色-->
+    <color name="titlebg">#323232</color>
+    <color name="balk">#000</color>
+    <color name="titletext">#fff</color>
+    <!--背景色-->
+    <color name="root_background">#f8f8f8</color>
+    <!--次要性文字,不常用-->
+    <color name="code_text">#646464</color>
+    <!--次要性文字-->
+    <color name="code_send">#969696</color>
+    <!--深色线条-->
+    <color name="indigo">#e2e2e2</color>
+    <!--浅色线条-->
+    <color name="pink">#eeeeee</color>
+    <color name="classify">#f8f8f8</color>
+    <color name="theme_color">#f9bf3a</color>
+    <color name="button_selector_color">#fec470</color>
+    <color name="text_color">#f3693b</color>
+    <color name="mine_bg">#FACC61</color>
+    <color name="phone_text">#60CF8B</color>
 </resources>
